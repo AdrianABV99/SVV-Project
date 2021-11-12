@@ -19,11 +19,11 @@ public class PathController {
         if(path.contains(" "))
             path = path.replace(" ", "%20");
         if (path.equals(""))
-            return "..\\svv-project\\src\\main\\java\\html\\index\\index.html";
+            return "..\\SVV-Project\\src\\main\\java\\html\\index\\index.html";
         if (path.charAt(path.length()-1) == '/')
-            return  "..\\svv-project\\src\\main\\java\\html\\index\\index.html";
+            return  "..\\SVV-Project\\src\\main\\java\\html\\index\\index.html";
 
-        return  "..\\svv-project\\src\\main\\java\\html\\TestServer\\" + path;
+        return  "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
     }
 
 
@@ -32,20 +32,20 @@ public class PathController {
         if(path.contains(" "))
             path = path.replace(" ", "%20");
 
-        return "..\\svv-project\\src\\main\\java\\html\\" + path;
+        return "..\\SVV-Project\\src\\main\\java\\html\\" + path;
     }
 
     private static String getPathTxt(String path)
     {
         if(path.contains(" "))
             path = path.replace(" ", "%20");
-        return "..\\svv-project\\src\\main\\java\\html\\TestServer\\" + path;
+        return "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
     }
 
     private static String getPathJpg(String path)
     {
         if(path.contains(" "))
             path = path.replace(" ", "%20");
-        return "..\\svv-project\\src\\main\\java\\html\\TestServer\\" + path;
+        return "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
     }
 }

@@ -3,7 +3,7 @@ package webserver;
 import java.net.*;
 import java.io.*;
 
-public class webServer extends Thread {
+public class Main extends Thread {
     protected Socket clientSocket;
 
     public static void main(String[] args) throws IOException {
@@ -15,7 +15,7 @@ public class webServer extends Thread {
             try {
                 while (true) {
                     System.out.println("Waiting for Connection");
-                    new webServer(serverSocket.accept());
+                    new Main(serverSocket.accept());
                 }
             } catch (IOException e) {
                 System.err.println("Accept failed.");
@@ -34,7 +34,7 @@ public class webServer extends Thread {
         }
     }
 
-    private webServer(Socket clientSoc) {
+    private Main(Socket clientSoc) {
         clientSocket = clientSoc;
         start();
     }

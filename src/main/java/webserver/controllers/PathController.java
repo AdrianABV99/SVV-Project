@@ -9,10 +9,13 @@ public class PathController {
         String path = msg.substring(msg.indexOf(' ')+1);
         path = path.substring(0,path.indexOf(' '));
 
-        if(path.contains(".txt"))
-            return getPathTxt(path);
-        if(path.contains(".jpg"))
-            return getPathJpg(path);
+        if(path.contains(".txt")){
+            if(path.contains(" ")) {
+                path = path.replace(" ", "%20");
+            }
+            return "..\\SVV-Project\\src\\main\\java\\html\\" + path;
+        }
+
         if(path.contains(".css"))
             return getPathCss(path);
 
@@ -23,7 +26,7 @@ public class PathController {
         if (path.charAt(path.length()-1) == '/')
             return  "..\\SVV-Project\\src\\main\\java\\html\\index\\index.html";
 
-        return  "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
+        return  "..\\SVV-Project\\src\\main\\java\\html\\maintenance\\" + path;
     }
 
 
@@ -42,10 +45,4 @@ public class PathController {
         return "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
     }
 
-    private static String getPathJpg(String path)
-    {
-        if(path.contains(" "))
-            path = path.replace(" ", "%20");
-        return "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
-    }
 }

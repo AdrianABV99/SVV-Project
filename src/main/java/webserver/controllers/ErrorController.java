@@ -5,14 +5,13 @@ import java.io.File;
 import java.io.PrintStream;
 
 public class ErrorController {
-        public static String ErrorHeader(PrintStream os, String errMessage)
+        public static String ErrorHeader(PrintStream out, String error)
         {
-            os.print("HTTP:/1.0 404 Not Found\n");
-            os.print("Content-type: text/html\n");
-            os.print("Content-length: "+errMessage.length()+"\n");
-            os.print("\n");
-            os.print(errMessage+"\n");
-
-            return "Message sent to:" + os + "With the following message" + errMessage;
+            out.println("HTTP:/1.0 404 Not Found");
+            out.println("Content-type: text/html");
+            out.println("Content-length: "+error.length());
+            out.println("\n");
+            out.println(error);
+            return "Message sent to:" + out + "with message" + error;
         }
 }

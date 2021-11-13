@@ -22,7 +22,7 @@ public class Server extends Thread {
 
         this.clientSocket = clientSocket;
         if (serverStatus.equals("EXIT")) {
-            System.exit(1);
+            System.exit(-1);
         }
         if (serverStatus.equals("RUN_SERVER"))
         {
@@ -66,18 +66,18 @@ public class Server extends Thread {
         }
 
 
-    public static void InitializeServer() {
+    public static void InitServer() {
 
         System.out.println("Enter SERVER STATUS:\t0: STOP\t1: MAINTENANCE\t2: RUN\t9: EXIT\n");
         System.out.println("CURRENT SERVER STATUS: " + serverStatus);
         Scanner myObj = new Scanner(System.in);
-        if(myObj.nextLine().equals("0")) serverStatus = "STOP_SERVER";
-        if(myObj.nextLine().equals("1")) serverStatus = "MAINTENANCE_SERVER";
-        if(myObj.nextLine().equals("2")) serverStatus = "RUN_SERVER";
-        if(myObj.nextLine().equals("9")) serverStatus = "EXIT";
-        System.out.println("\nNEW CURRENT SERVER STATUS: " + serverStatus + "\n");
+        if(myObj.nextLine().equals("1")) serverStatus = "STOP_SERVER";
+        if(myObj.nextLine().equals("2")) serverStatus = "MAINTENANCE_SERVER";
+        if(myObj.nextLine().equals("3")) serverStatus = "RUN_SERVER";
+        if(myObj.nextLine().equals("0")) serverStatus = "EXIT";
+        System.out.println("\n\tNEW CURRENT SERVER STATUS: " + serverStatus + "\n");
 
-        if(!serverStatus.equals("EXIT")) InitializeServer();
+        if(!serverStatus.equals("EXIT")) InitServer();
     }
 
 
@@ -85,16 +85,16 @@ public class Server extends Thread {
     public void MaintenanceServer() {
         try {
             DataInputStream in;
-            PrintStream os = new PrintStream(clientSocket.getOutputStream());
-            File file = objectFile.OpenFile("..\\svv-project\\src\\main\\java\\html\\maintenance\\index.html");
+            PrintStream out = new PrintStream(clientSocket.getOutputStream());
+            File file = objectFile.OpenFile("..\\SVV-Project\\src\\main\\java\\html\\maintenance\\index.html");
             try {
                 in = new DataInputStream(new FileInputStream(file));
-                objectFile.FileFoundHeader(os, (int) file.length(), file);
-                objectFile.SendReply(os, in, (int) file.length());
+                objectFile.FileFoundHeader(out, (int) file.length(), file);
+                objectFile.SendReply(out, in, (int) file.length());
             } catch (Exception e) {
-                errorController.ErrorHeader(os, "Can't read Maintenance html file");
+                errorController.ErrorHeader(out, "Can't read Maintenance html file");
             }
-            os.flush();
+            out.flush();
             clientSocket.close();
         } catch (IOException e) {
             System.err.println("Problem with Communication Server");

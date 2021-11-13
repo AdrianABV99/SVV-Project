@@ -3,7 +3,8 @@ package webserver;
 import java.net.*;
 import java.io.*;
 
-import static webserver.Server.InitializeServer;
+import static webserver.Server.InitServer;
+
 
 public class Main extends Thread {
     protected Socket clientSocket;
@@ -15,7 +16,7 @@ public class Main extends Thread {
         Server webServer = null;
         Thread startServer=new Thread() {
             public void run() {
-                InitializeServer();
+                InitServer();
             }
         };
         startServer.start();

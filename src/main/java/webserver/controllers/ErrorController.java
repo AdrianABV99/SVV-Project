@@ -1,5 +1,7 @@
 package webserver.controllers;
 
+import java.io.DataInputStream;
+import java.io.File;
 import java.io.PrintStream;
 
 public class ErrorController {
@@ -13,5 +15,4 @@ public class ErrorController {
 
             return "Message sent to:" + os + "With the following message" + errMessage;
         }
-
 }

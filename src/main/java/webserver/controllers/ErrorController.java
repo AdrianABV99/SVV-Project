@@ -8,9 +8,9 @@ public class ErrorController {
         public static String ErrorHeader(PrintStream out, String error)
         {
             out.println("HTTP:/1.0 404 Not Found");
-            out.println("Content-type: text/html");
-            out.println("Content-length: "+error.length());
-            out.println("\n");
+            out.println("type: text/html");
+            out.println("length: "+error.length());
+            out.println();
             out.println(error);
             return "Message sent to:" + out + "with message" + error;
         }

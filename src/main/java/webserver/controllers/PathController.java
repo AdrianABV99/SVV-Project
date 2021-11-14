@@ -16,8 +16,13 @@ public class PathController {
             return "..\\SVV-Project\\src\\main\\java\\html\\" + path;
         }
 
-        if(path.contains(".css"))
-            return getPathCss(path);
+        if(path.contains(".css")) {
+            if(path.contains(" "))
+                path = path.replace(" ", "%20");
+
+            return "..\\SVV-Project\\src\\main\\java\\html\\" + path;
+        }
+
 
         if(path.contains(" "))
             path = path.replace(" ", "%20");
@@ -30,19 +35,6 @@ public class PathController {
     }
 
 
-    private static String getPathCss(String path)
-    {
-        if(path.contains(" "))
-            path = path.replace(" ", "%20");
 
-        return "..\\SVV-Project\\src\\main\\java\\html\\" + path;
-    }
-
-    private static String getPathTxt(String path)
-    {
-        if(path.contains(" "))
-            path = path.replace(" ", "%20");
-        return "..\\SVV-Project\\src\\main\\java\\html\\TestServer\\" + path;
-    }
 
 }

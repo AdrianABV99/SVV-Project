@@ -32,7 +32,7 @@ public class Server extends Thread {
             MaintenanceServer();
         }
         if (serverStatus.equals("STOP_SERVER")) {
-            StopServer();
+            //StopServer();
         }
     }
 
@@ -71,13 +71,24 @@ public class Server extends Thread {
         System.out.println("Enter SERVER STATUS:\t0: STOP\t1: MAINTENANCE\t2: RUN\t9: EXIT\n");
         System.out.println("CURRENT SERVER STATUS: " + serverStatus);
         Scanner myObj = new Scanner(System.in);
-        if(myObj.nextLine().equals("1")) serverStatus = "STOP_SERVER";
-        if(myObj.nextLine().equals("2")) serverStatus = "MAINTENANCE_SERVER";
-        if(myObj.nextLine().equals("3")) serverStatus = "RUN_SERVER";
-        if(myObj.nextLine().equals("0")) serverStatus = "EXIT";
+        if(myObj.nextLine().equals("1"))
+        {
+            serverStatus = "STOP_SERVER";
+        }
+        if(myObj.nextLine().equals("2")) {
+            serverStatus = "MAINTENANCE_SERVER";
+        }
+        if(myObj.nextLine().equals("3")) {
+            serverStatus = "RUN_SERVER";
+        }
+        if(myObj.nextLine().equals("0")) {
+            serverStatus = "EXIT";
+        }
         System.out.println("\n\tNEW CURRENT SERVER STATUS: " + serverStatus + "\n");
 
-        if(!serverStatus.equals("EXIT")) InitServer();
+        if(!serverStatus.equals("EXIT")) {
+            InitServer();
+        }
     }
 
 
@@ -104,6 +115,5 @@ public class Server extends Thread {
 
 
 
-    private void StopServer() {
-    }
+
 }

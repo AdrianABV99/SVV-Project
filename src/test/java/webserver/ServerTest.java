@@ -1,13 +1,11 @@
 package webserver;
 
 import org.junit.*;
-import webserver.controllers.ErrorController;
-import webserver.controllers.PathController;
-import webserver.utility.ObjectFile;
+import webserver.controllers.Error;
+import webserver.controllers.Path;
+import webserver.utility.FileHandler;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,9 +14,9 @@ import static org.mockito.Mockito.mock;
 
 public class ServerTest {
 
-    private static ObjectFile objectFileMock = mock(ObjectFile.class);
-    private static PathController pathControllerMock = mock(PathController.class);
-    private static ErrorController errorControllerMock =mock(ErrorController.class);
+    private static FileHandler fileHandlerMock = mock(FileHandler.class);
+    private static Path pathMock = mock(Path.class);
+    private static Error errorMock =mock(Error.class);
     private static PrintStream out;
     private static Server webServer;
 
@@ -39,17 +37,42 @@ public class ServerTest {
     public void TestRunMock() throws IOException {
 
 
-        assertEquals("good path", "..\\SVV-Project\\src\\main\\java\\html\\index\\index.html", pathControllerMock.getPath("GET / HTTP/1.1"));
-        String path = "..\\svv-project\\src\\main\\java\\html\\index\\index.html";
+        assertEquals("good path", "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html", pathMock.getPath("GET / HTTP/1.1"));
+        String path = "..\\svv-project\\src\\main\\java\\webserver\\html\\index\\index.html";
         File file = new File(path);
-        assertEquals("Expected a good path for the file", file, objectFileMock.OpenFile(path));
+        assertEquals("Expected a good path for the file", file, fileHandlerMock.OpenFile(path));
+        String error = "ERROR MESSAGE TEST";
+        assertEquals("Expected an error output", "Message sent to:" + out + "with message" + error, errorMock.ErrorHeader(out, error));
+        assertEquals("Expected output to succeed when checking the file", "Message sent to:" + out + " the file" + file + "type: " + "text/html" + " length:" + (int) file.length(), fileHandlerMock.FileFoundHeader(out, (int) file.length(), file));
+    }
+
+    @Test
+    public void getFile() throws FileNotFoundException {
+        String goodPath = "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html";
+        String badPath =  "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\notHere.html";
+        File file = new File(goodPath);
+        DataInputStream in = new DataInputStream(new FileInputStream(file));
+        assertEquals("get index file", "Message sent to:" + out + " the file" + file + "type: " + "text/html" + " length:" + (int) file.length(), fileHandlerMock.FileFoundHeader(out,(int) file.length(),file));
+        assertEquals("replay succes","Successfully sending the reply " + out,fileHandlerMock.SendReply(out, in, (int) file.length()));
+        file = new File(badPath);
+        String error = "File doesn't exist";
+        assertEquals("failed to get the file","Message sent to:" + out + "with message" + "Not Found " + badPath,errorMock.ErrorHeader(out,"Not Found " + badPath));
+    }
+
+    @Test
+    public void TestMaintenanceServerMock() throws IOException {
+        String path = "..\\svv-project\\src\\main\\java\\webserver\\html\\maintenance\\index.html";
+        File file = new File(path);
+        assertEquals("good path", file, fileHandlerMock.OpenFile(path));
 
         String error = "ERROR MESSAGE TEST";
-        assertEquals("Expected an error output", "Message sent to:" + out + "with message" + error, errorControllerMock.ErrorHeader(out, error));
+        assertEquals("error output", "Message sent to:" + out + "with message" + error, errorMock.ErrorHeader(out, error));
 
-        assertEquals("Expected output to succeed when checking the file", "Message sent to:" + out + " the file" + file + "type: " + "text/html" + " length:" + (int) file.length(), objectFileMock.FileFoundHeader(out, (int) file.length(), file));
-        //webServer.run();
+        assertEquals("succes when checking the file", "Message sent to:" + out + " the file" + file + "type: " + "text/html" + " length:" + (int)file.length(), fileHandlerMock.FileFoundHeader(out, (int) file.length(), file));
+
+
     }
+
 
 
 }

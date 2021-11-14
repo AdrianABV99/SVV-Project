@@ -4,9 +4,9 @@ import java.net.*;
 import java.io.*;
 import java.util.Scanner;
 
-import webserver.controllers.ErrorController;
-import webserver.controllers.PathController;
-import webserver.utility.ObjectFile;
+import webserver.controllers.Error;
+import webserver.controllers.Path;
+import webserver.utility.FileHandler;
 
 
 
@@ -14,49 +14,48 @@ public class Server extends Thread {
 
     private Socket clientSocket;
     public static String serverStatus = "STOP_SERVER";
-    private ErrorController errorController = new ErrorController();
-    private PathController pathController = new PathController();
-    private ObjectFile objectFile = new ObjectFile();
+    private Error error = new Error();
+    private Path path = new Path();
+    private FileHandler fileHandler = new FileHandler();
 
     public Server(Socket clientSocket) {
 
         this.clientSocket = clientSocket;
-        if (serverStatus.equals("EXIT")) {
-            System.exit(-1);
-        }
-        if (serverStatus.equals("RUN_SERVER"))
-        {
-            start();
-        }
-        if (serverStatus.equals("MAINTENANCE_SERVER")) {
-            MaintenanceServer();
-        }
-        if (serverStatus.equals("STOP_SERVER")) {
-            //StopServer();
-        }
+
+        switch (serverStatus) {
+            case "EXIT":
+                System.exit(-1);
+                break;
+            case "RUN_SERVER":
+                start();
+                break;
+
+            case "MAINTENANCE_SERVER":
+                MaintenanceServer();
+                break;
+
+            case "STOP_SERVER":
+                //StopServer();
+                break;
+            default:
+                break;
+            }
+
     }
 
 
     public void run() {
 
+        PrintStream out = null;
+        BufferedReader is = null;
+        DataInputStream in = null;
         try {
-            DataInputStream in;
-            PrintStream out = new PrintStream(clientSocket.getOutputStream());
-            BufferedReader is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            out = new PrintStream(clientSocket.getOutputStream());
+            is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String path;
-            if ((path = pathController.getPath(is.readLine())) != null) {
-                File file = objectFile.OpenFile(path);
-                if (file.exists()) {
-                    try {
-                        in = new DataInputStream(new FileInputStream(file));
-                        objectFile.FileFoundHeader(out, (int) file.length(), file);
-                        objectFile.SendReply(out, in, (int) file.length());
-                    } catch (Exception e) {
-                        errorController.ErrorHeader(out, "Can't Read " + path);
-                    }
-                    out.flush();
-                } else
-                    errorController.ErrorHeader(out, "Not Found " + path);
+            if ((path = this.path.getPath(is.readLine())) != null) {
+                getFile(out,path);
             }
             clientSocket.close();
         } catch (IOException e) {
@@ -65,25 +64,32 @@ public class Server extends Thread {
         }
         }
 
-
     public static void InitServer() {
 
         System.out.println("Enter SERVER STATUS:\t0: STOP\t1: MAINTENANCE\t2: RUN\t9: EXIT\n");
         System.out.println("CURRENT SERVER STATUS: " + serverStatus);
-        Scanner myObj = new Scanner(System.in);
-        if(myObj.nextLine().equals("1"))
-        {
-            serverStatus = "STOP_SERVER";
-        }
-        if(myObj.nextLine().equals("2")) {
-            serverStatus = "MAINTENANCE_SERVER";
-        }
-        if(myObj.nextLine().equals("3")) {
-            serverStatus = "RUN_SERVER";
-        }
-        if(myObj.nextLine().equals("0")) {
-            serverStatus = "EXIT";
-        }
+        Scanner scanner = new Scanner(System.in);
+        switch (scanner.nextLine()) {
+            case "1":
+                serverStatus = "STOP_SERVER";
+                break;
+
+            case "2":
+                serverStatus = "MAINTENANCE_SERVER";
+                break;
+
+            case "3":
+                serverStatus = "RUN_SERVER";
+                break;
+
+            case "0":
+                serverStatus = "EXIT";
+                break;
+            default:
+                break;
+            }
+
+
         System.out.println("\n\tNEW CURRENT SERVER STATUS: " + serverStatus + "\n");
 
         if(!serverStatus.equals("EXIT")) {
@@ -91,19 +97,32 @@ public class Server extends Thread {
         }
     }
 
-
+    public void getFile(PrintStream out, String path ) {
+        File file = fileHandler.OpenFile(path);
+        if (file.exists()) {
+            try {
+            DataInputStream in = new DataInputStream(new FileInputStream(file));
+                fileHandler.FileFoundHeader(out, (int) file.length(), file);
+                fileHandler.SendReply(out, in, (int) file.length());
+            } catch (Exception e) {
+                error.ErrorHeader(out, "Can't Read " + path);
+            }
+            out.flush();
+        }  else
+            error.ErrorHeader(out, "Not Found " + path);
+    }
 
     public void MaintenanceServer() {
         try {
             DataInputStream in;
             PrintStream out = new PrintStream(clientSocket.getOutputStream());
-            File file = objectFile.OpenFile("..\\SVV-Project\\src\\main\\java\\html\\maintenance\\index.html");
+            File file = fileHandler.OpenFile("..\\SVV-Project\\src\\main\\java\\html\\maintenance\\index.html");
             try {
                 in = new DataInputStream(new FileInputStream(file));
-                objectFile.FileFoundHeader(out, (int) file.length(), file);
-                objectFile.SendReply(out, in, (int) file.length());
+                fileHandler.FileFoundHeader(out, (int) file.length(), file);
+                fileHandler.SendReply(out, in, (int) file.length());
             } catch (Exception e) {
-                errorController.ErrorHeader(out, "Can't read Maintenance html file");
+                error.ErrorHeader(out, "Can't read Maintenance html file");
             }
             out.flush();
             clientSocket.close();

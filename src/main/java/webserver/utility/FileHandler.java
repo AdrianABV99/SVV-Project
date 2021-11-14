@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.PrintStream;
 
-public class ObjectFile {
+public class FileHandler {
 
     public static String FileFoundHeader(PrintStream out, int fileLength, File file) {
 

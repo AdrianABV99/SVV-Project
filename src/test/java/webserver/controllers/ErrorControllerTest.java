@@ -38,6 +38,7 @@ public class ErrorControllerTest {
         assertEquals("Expected this output: ", "Message sent to:" + os + "With the following message" + errMessage,errorController.ErrorHeader(os, errMessage));
         assertNotNull(errorController);
         serverSocket.close();
+        clientSocket.close();
     }
 
 

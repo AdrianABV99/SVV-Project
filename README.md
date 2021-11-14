@@ -3,4 +3,4 @@ I used:
 -mockito-core 4.0.0
 -junit 4.13.2
 -java 8
-![](code-coverage.png)
+![](src/code-coverage.png)

@@ -9,7 +9,7 @@ CODE-COVERAGE
 
 
 STATIC-ANALYSIS
-![](src/images/Spotbugs-SS/Screenshot 2021-11-28 222652.png)
+![](src/images/Spotbugs-SS/Screenshot%202021-11-28%20222652.png)
 ![](src/images/Spotbugs-SS/Screenshot 2021-11-28 222729.png)
 ![](src/images/Spotbugs-SS/Screenshot 2021-11-28 222749.png)
 ![](src/images/Spotbugs-SS/Screenshot 2021-11-28 222803.png)

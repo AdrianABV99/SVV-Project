@@ -47,6 +47,7 @@ public class FileHandler {
     }
 
     private static String CheckFile(String fileExtension) {
+
         if(fileExtension.contains(".css")) {
             return "text/css";
         }

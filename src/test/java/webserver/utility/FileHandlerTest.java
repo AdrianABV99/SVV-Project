@@ -28,7 +28,7 @@ public class FileHandlerTest {
 
 
     @Test
-    public void fileFoundHeader() throws IOException {
+    public void     fileFoundHeader() throws IOException {
         ServerSocket serverSocket = new ServerSocket(10009);
         Socket clientSocket = serverSocket.accept();
         PrintStream out = new PrintStream(clientSocket.getOutputStream());
@@ -39,6 +39,8 @@ public class FileHandlerTest {
 
         file = new File("..\\SVV-Project\\src\\main\\java\\html\\index\\style.css");
         assertEquals("Expected output to succeed when checking the file","Message sent to:" + out + " the file" + file + "type: " + "text/css" + " length:" + fileLength, fileHandler.FileFoundHeader(out, fileLength, file));
+        File xmlFile = new File("..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\file.xml");
+        assertEquals("expect error when checking file","Error when checking the file",fileHandler.FileFoundHeader(out, fileLength, xmlFile));
         serverSocket.close();
         clientSocket.close();
 
@@ -52,6 +54,7 @@ public class FileHandlerTest {
         System.out.println("OPEN BROWSER: http://localhost:10011/");
 
         File file = new File("..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html");
+        File xmlFile = new File("..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\file.xml");
         assertEquals("Expected output: ", "Message sent to:" + out + " the file" + file + "type: " + "text/html" + " length:" + fileLength, fileHandler.FileFoundHeader(out, fileLength, file));
         //"Message sent to:" + out + " the file" + file + "type: " + "text/html" + " length:" + fileLength
         DataInputStream in = new DataInputStream(new FileInputStream(new File("..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html")));
@@ -60,5 +63,7 @@ public class FileHandlerTest {
         serverSocket.close();
         clientSocket.close();
     }
+
+
 
 }

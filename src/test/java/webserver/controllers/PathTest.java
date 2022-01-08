@@ -25,6 +25,8 @@ public class PathTest {
         assertEquals("Expecting null", null, path.getPath("POST / HTTP/1.1"));
         String error = "File doesn't exist";
         assertEquals("Expecting wrong string", "..\\SVV-Project\\src\\main\\java\\webserver\\html/FalsePositive", path.getPath("GET /FalsePositive HTTP/1.1"));
+        assertEquals("expecting text file ","..\\SVV-Project\\src\\main\\java\\webserver\\html\\/file1.txt",path.getPath("GET /file1.txt HTTP/1.1"));
+        assertEquals("spaces with get","..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html",path.getPath("GET /    HTTP/1.1"));
     }
 
 }

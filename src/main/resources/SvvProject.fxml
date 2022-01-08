@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="611.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="30.0" layoutY="28.0" prefHeight="200.0" prefWidth="254.0" style="-fx-border-color: #000;">
+         <children>
+            <Label layoutX="30.0" layoutY="27.0" prefHeight="17.0" prefWidth="88.0" text="Server Status:" />
+            <Label layoutX="196.0" layoutY="27.0" text="Label" />
+            <Label layoutX="30.0" layoutY="74.0" prefHeight="17.0" prefWidth="88.0" text="Server address:" />
+            <Label layoutX="196.0" layoutY="74.0" text="Label" />
+            <Label layoutX="30.0" layoutY="138.0" prefHeight="17.0" prefWidth="115.0" text="Server listening port" />
+            <Label layoutX="196.0" layoutY="139.0" text="Label" />
+         </children>
+      </Pane>
+      <Label layoutX="30.0" layoutY="1.0" prefHeight="26.0" prefWidth="228.0" text="WebServer Info" />
+      <Pane layoutX="370.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #000;">
+         <children>
+            <CheckBox layoutX="14.0" layoutY="169.0" mnemonicParsing="false" text="Switch to maintenance mode" />
+            <Button layoutX="74.0" layoutY="88.0" mnemonicParsing="false" text="StartServer" />
+         </children></Pane>
+      <Pane layoutX="30.0" layoutY="267.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000;">
+         <children>
+            <Label layoutX="33.0" layoutY="48.0" text="Server Listening on port" />
+            <Label layoutX="33.0" layoutY="100.0" prefHeight="18.0" prefWidth="115.0" text="Web root directory" />
+            <Label layoutX="33.0" layoutY="143.0" prefHeight="17.0" prefWidth="127.0" text="Maintenance directory" />
+            <TextField layoutX="191.0" layoutY="44.0" />
+            <TextField layoutX="191.0" layoutY="96.0" />
+            <TextField layoutX="191.0" layoutY="130.0" />
+         </children></Pane>
+      <Label layoutX="366.0" layoutY="4.0" text="WebServer Control" />
+      <Label layoutX="30.0" layoutY="249.0" text="WebServer Configuration" />
+   </children>
+</AnchorPane>

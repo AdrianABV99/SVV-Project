@@ -17,11 +17,14 @@ public class Server extends Thread {
     private Error error = new Error();
     private Path path = new Path();
     private FileHandler fileHandler = new FileHandler();
+    private String rootPath = "";
+    private String maintenancePath = "";
 
-    public Server(Socket clientSocket) {
+    public Server(Socket clientSocket,String rootPath, String maintenancePath) {
 
         this.clientSocket = clientSocket;
-
+        this.rootPath = rootPath;
+        this.maintenancePath = maintenancePath;
         switch (serverStatus) {
             case "EXIT":
                 System.exit(-1);
@@ -89,7 +92,7 @@ public class Server extends Thread {
             out = new PrintStream(clientSocket.getOutputStream());
             is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String path;
-            if ((path = this.path.getPath(is.readLine())) != null) {
+            if ((path = this.path.getPath(is.readLine(), this.rootPath)) != null) {
                 getFile(out,path);
             }
             clientSocket.close();
@@ -128,14 +131,8 @@ public class Server extends Thread {
         try {
             DataInputStream in;
             PrintStream out = new PrintStream(clientSocket.getOutputStream());
-            File file = fileHandler.OpenFile("..\\SVV-Project\\src\\main\\java\\html\\maintenance\\index.html");
-            try {
-                in = new DataInputStream(new FileInputStream(file));
-                fileHandler.FileFoundHeader(out, (int) file.length(), file);
-                fileHandler.SendReply(out, in, (int) file.length());
-            } catch (Exception e) {
-                error.ErrorHeader(out, "Can't read Maintenance html file");
-            }
+            String path;
+            getFile(out,maintenancePath);
             out.flush();
             clientSocket.close();
         } catch (IOException e) {

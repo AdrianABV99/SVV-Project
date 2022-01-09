@@ -2,7 +2,7 @@ package webserver.controllers;
 
 public class Path {
 
-    public static String getPath(String msg) {
+    public static String getPath(String msg, String rootPath) {
         if (msg.length() == 0 || !msg.substring(0,3).equals("GET")){
             return null;
         }
@@ -13,25 +13,25 @@ public class Path {
             if(path.contains(" ")) {
                 path = path.replace(" ", "%20");
             }
-            return "..\\SVV-Project\\src\\main\\java\\webserver\\html\\" + path;
+            return rootPath + path;
         }
 
         if(path.contains(".css")) {
             if(path.contains(" "))
                 path = path.replace(" ", "%20");
 
-            return "..\\SVV-Project\\src\\main\\java\\webserver\\html\\" + path;
+            return rootPath + path;
         }
 
 
         if(path.contains(" "))
             path = path.replace(" ", "%20");
         if (path.equals(""))
-            return "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html";
+            return rootPath + "index\\index.html";
         if (path.charAt(path.length()-1) == '/')
-            return  "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html";
+            return  rootPath + "index\\index.html";
 
-        return  "..\\SVV-Project\\src\\main\\java\\webserver\\html" + path;
+        return  rootPath + path;
     }
 
 

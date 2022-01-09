@@ -10,6 +10,8 @@ import static webserver.Server.InitServer;
 
 public class Main extends Thread {
     protected Socket clientSocket;
+    public static String serverRoot = "..\\svv-project\\src\\main\\java\\webserver\\html\\";
+    public static String serverMaintenance = "..\\svv-project\\src\\main\\java\\webserver\\html\\maintenance\\index.html";
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
@@ -28,7 +30,7 @@ public class Main extends Thread {
             try {
                 while (true) {
                     System.out.println("Waiting for Connection");
-                    new Server(serverSocket.accept());
+                    new Server(serverSocket.accept(),serverRoot,serverMaintenance);
                 }
             } catch (IOException e) {
                 System.err.println("Accept failed.");

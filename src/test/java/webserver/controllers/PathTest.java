@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 public class PathTest {
 
     Path path;
+    public static String serverRoot = "..\\svv-project\\src\\main\\java\\webserver\\html\\";
+    public static String serverMaintenance = "..\\svv-project\\src\\main\\java\\webserver\\html\\maintenance\\index.html";
     @Before
     public void setUp() throws Exception {
         path = new Path();
@@ -20,13 +22,13 @@ public class PathTest {
 
     @Test
     public void getPath() {
-        assertEquals("Expecting index.html", "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html", path.getPath("GET / HTTP/1.1"));
-        assertEquals("Expecting style.css", "..\\SVV-Project\\src\\main\\java\\webserver\\html\\/style.css", path.getPath("GET /style.css HTTP/1.1"));
-        assertEquals("Expecting null", null, path.getPath("POST / HTTP/1.1"));
+        assertEquals("Expecting index.html", "..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html", path.getPath("GET / HTTP/1.1",serverRoot));
+        assertEquals("Expecting style.css", "..\\SVV-Project\\src\\main\\java\\webserver\\html\\/style.css", path.getPath("GET /style.css HTTP/1.1",serverRoot) );
+        assertEquals("Expecting null", null, path.getPath("POST / HTTP/1.1",serverRoot));
         String error = "File doesn't exist";
-        assertEquals("Expecting wrong string", "..\\SVV-Project\\src\\main\\java\\webserver\\html/FalsePositive", path.getPath("GET /FalsePositive HTTP/1.1"));
-        assertEquals("expecting text file ","..\\SVV-Project\\src\\main\\java\\webserver\\html\\/file1.txt",path.getPath("GET /file1.txt HTTP/1.1"));
-        assertEquals("spaces with get","..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html",path.getPath("GET /    HTTP/1.1"));
+        assertEquals("Expecting wrong string", "..\\SVV-Project\\src\\main\\java\\webserver\\html/FalsePositive", path.getPath("GET /FalsePositive HTTP/1.1",serverRoot));
+        assertEquals("expecting text file ","..\\SVV-Project\\src\\main\\java\\webserver\\html\\/file1.txt",path.getPath("GET /file1.txt HTTP/1.1",serverRoot));
+        assertEquals("spaces with get","..\\SVV-Project\\src\\main\\java\\webserver\\html\\index\\index.html",path.getPath("GET /    HTTP/1.1",serverRoot));
     }
 
 }

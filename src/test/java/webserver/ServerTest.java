@@ -19,8 +19,8 @@ public class ServerTest {
     private  Error errorMock =mock(Error.class);
     private  PrintStream  out;
     private  Server webServer;
-    public static String serverRoot = "..\\svv-project\\src\\main\\java\\webserver\\html\\";
-    public static String serverMaintenace = "..\\svv-project\\src\\main\\java\\webserver\\html\\maintenance\\index.html";
+    public static String serverRoot = "..\\SVV-Project\\src\\main\\java\\webserver\\html\\";
+    public static String serverMaintenace = "..\\SVV-Project\\src\\main\\java\\webserver\\html\\maintenance\\index.html";
 
     @Before
     public  void setUp() throws Exception {
@@ -51,7 +51,7 @@ public class ServerTest {
         assertEquals("Not Found",out + "Not Found " + badPath,webServer.getFile(out,badPath));
     }
 
-   @Test
+ /*  @Test
    public void  InitServer() throws IOException{
         ServerSocket serverSocket = new ServerSocket(10021);
         Socket clientSocket = serverSocket.accept();
@@ -59,7 +59,7 @@ public class ServerTest {
         webServer.serverStatus = "EXIT";
         webServer.InitServer();
 
-}
+}*/
 
     @Test
     public void TestMaintenanceServerMock() throws IOException {

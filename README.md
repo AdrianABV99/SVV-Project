@@ -2,7 +2,12 @@
 I used:
 -mockito-core 4.0.0
 -junit 4.13.2
--java 8
+-java 16
+-javafx-fxml ver 18-ea+9
+-javafx-base ver 18-ea+9
+-javafx-graphics ver 18-ea+9
+-javafx-controls ver
+
 
 CODE-COVERAGE
 ![](src/images/code-coverage.png)
@@ -31,7 +36,9 @@ DYNAMIC-ANALYSIS
 ![](src/images/Profiler-SS/Screenshot%202021-11-28%20231913.png)
 
 
-
+3DImageView
+![](src/images/3DView/3DViewindex.png)
+![](src/images/3DView/maintenance3DView.png)
 
 
 
